@@ -1,0 +1,44 @@
+# 公共配置文件
+server:
+  address: 0.0.0.0
+  port: 8505
+  servlet:
+    context-path: /api
+spring:
+  application:
+    name: BackEnd-QDT
+  profiles:
+    active: dev # 默认 dev 环境
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.137.231:3306/backend_db
+    username: backend_db
+    password: 1234
+
+## MyBatis-plus配置
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true #设置为 true 时,这个配置项表示是否将数据库表的下划线命名方式（例如，user_name）映射为 Java 类的驼峰命名方式（例如，userName）
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # MyBatis-Plus 在执行过程中的日志输出会显示在控制台上，有助于开发者调试和查看执行过程中的 SQL 等信息
+  global-config:
+    db-config:
+      logic-delete-field: is_delete # 全局逻辑删除的实体字段名
+      logic-delete-value: 1 # 逻辑已删除值（默认为 1）
+      logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
+
+##  knife4j 配置
+knife4j:
+  enable: true
+  openapi:
+    title: BackEnd-QDT
+    description: "BackEnd-QDT,SpringBoot后端快速开发脚手架接口合集"
+    email: ztboxs@163.com
+    concat: zt
+    url: http://localhost:8505
+    version: v4.0
+    terms-of-service-url: http://ztboxs.top
+    group:
+      xc-content:
+        group-name: BackEnd-QDT通用接口
+        api-rule: package
+        api-rule-resources: top.ztboxs #接口目录 默认top.ztboxs下的全部目录
