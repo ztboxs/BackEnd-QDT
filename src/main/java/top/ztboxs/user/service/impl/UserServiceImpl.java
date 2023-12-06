@@ -56,7 +56,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             //插入数据到数据库
             User user = new User();
             user.setUserAccount(userAccount);
-            user.setUserPassword(userPassword);
+            user.setUserPassword(encryptPassword);
             boolean save = this.save(user);
             if (!save) {
                 throw new BusinessException(ErrorCode.SYSTEM_ERROR,"注册失败！数据库插入错误");
