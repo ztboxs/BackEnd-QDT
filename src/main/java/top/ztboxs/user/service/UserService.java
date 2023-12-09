@@ -3,6 +3,9 @@ package top.ztboxs.user.service;
 import top.ztboxs.user.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.ztboxs.user.entity.dto.UserRegisterDto;
+import top.ztboxs.user.entity.vo.LoginUserVO;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
 * @author ztboxs
@@ -20,4 +23,12 @@ public interface UserService extends IService<User> {
      */
     long userRegister(UserRegisterDto userRegisterDto);
 
+    /**
+     * 用户登录
+     * @param userAccount 账号
+     * @param userPassword 密码
+     * @param request
+     * @return
+     */
+    LoginUserVO userLogin(String userAccount, String userPassword, HttpServletRequest request);
 }

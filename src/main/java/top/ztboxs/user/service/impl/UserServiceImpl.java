@@ -3,16 +3,21 @@ package top.ztboxs.user.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sun.xml.internal.bind.v2.TODO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.util.DigestUtils;
 import top.ztboxs.common.enums.ErrorCode;
 import top.ztboxs.common.exception.BusinessException;
 import top.ztboxs.user.entity.User;
 import top.ztboxs.user.entity.dto.UserRegisterDto;
+import top.ztboxs.user.entity.vo.LoginUserVO;
 import top.ztboxs.user.mapper.UserMapper;
 import top.ztboxs.user.service.UserService;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
+
+import static top.ztboxs.common.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
  * @author zt
@@ -64,6 +69,33 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             return user.getId();
         }
     }
+
+    @Override
+    public LoginUserVO userLogin(String userAccount, String userPassword, HttpServletRequest request) {
+        //加密密码与数据库对比
+        String encryptedPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_account", userAccount);
+        queryWrapper.eq("user_password", encryptedPassword);
+        User user = this.baseMapper.selectOne(queryWrapper);
+        if (user == null) {
+            throw new BusinessException(ErrorCode.PARAMETER_ERROR,"用户不存在或者密码错误");
+        }
+        //记录用户的登入状态
+        request.getSession().setAttribute(USER_LOGIN_STATE,user);
+        return this.getLoginUserVO(user);
+    }
+
+    public LoginUserVO getLoginUserVO(User user) {
+        if (user == null) {
+            return null;
+        }
+        LoginUserVO loginUserVO = new LoginUserVO();
+        BeanUtils.copyProperties(user, loginUserVO);
+        return loginUserVO;
+    }
+
+
 }
 
 
