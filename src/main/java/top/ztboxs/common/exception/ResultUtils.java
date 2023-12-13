@@ -9,7 +9,7 @@ import top.ztboxs.common.enums.ErrorCode;
  * @Date: 2023/12/06/0:38
  * @Description: 返回工具
  */
-public class ResultsUtils {
+public class ResultUtils {
 
     /**
      * 成功

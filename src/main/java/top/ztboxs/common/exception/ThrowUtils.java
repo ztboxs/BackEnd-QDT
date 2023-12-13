@@ -9,7 +9,7 @@ import top.ztboxs.common.enums.ErrorCode;
  * @Date: 2023/12/06/0:42
  * @Description: 抛异常工具类
  */
-public class throwIf {
+public class ThrowUtils {
     /**
      * 条件成立则抛异常
      *

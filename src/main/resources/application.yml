@@ -8,11 +8,14 @@ spring:
   application:
     name: BackEnd-QDT
   profiles:
-    active: dev # 默认 dev 环境
+    active: dev # 默认 dev 环境 localhost
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.137.231:3306/backend_db
-    username: backend_db
+#    url: jdbc:mysql://192.168.137.231:3306/backend_db
+#    username: backend_db
+#    password: 1234
+    url: jdbc:mysql://localhost:3306/backend_db
+    username: root
     password: 1234
 
 ## MyBatis-plus配置
